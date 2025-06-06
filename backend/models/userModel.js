@@ -7,29 +7,29 @@ const userSchema = mongoose.Schema(
       required: true,
       unique: true,
       minlength: 4,
-      maxlength: 64
+      maxlength: 64,
     },
     email: {
       type: String,
       required: true,
       unique: true,
       trim: true,
-      lowercase: true
+      lowercase: true,
     },
     username: {
       type: String,
       required: true,
       unique: true,
       minlength: 4,
-      maxlength: 64
+      maxLength: 64,
     },
     password: {
       type: String,
-      required: true
-    }
+      required: true,
+    },
   },
   {
-    timestamps: true
+    timestamps: true,
   }
 );
 
