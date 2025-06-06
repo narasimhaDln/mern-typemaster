@@ -1,30 +1,26 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { useGameContext } from "../context/GameContext.tsx";
-import Word from "./Word.tsx";
-import Cursor from "./Cursor.tsx";
+import { useGameContext } from "../context/GameContext";
+import Word from "./Word";
+import Cursor from "./Cursor";
 import { debounce } from "lodash";
 
-type WordBoxProps = {};
-
-export function WordBox({}: WordBoxProps) {
+export function WordBox() {
   const { currLetterIdx, currWordIdx, gameWords, wordsClassNames, isLoading } =
     useGameContext();
-  const wordBoxRef = useRef<HTMLDivElement>(null);
+  const wordBoxRef = useRef(null);
   const [cursorPosition, setCursorPosition] = useState({ top: 0, left: 0 });
 
   const updateScrollPosition = useCallback(() => {
-    if (isLoading) {
-      return;
-    }
+    if (isLoading) return;
 
     if (wordBoxRef.current) {
       const currentWordElement = wordBoxRef.current.children[currWordIdx];
       currentWordElement.scrollIntoView({
         behavior: "instant",
-        block: "nearest"
+        block: "nearest",
       });
     }
-  }, [currWordIdx]);
+  }, [currWordIdx, isLoading]);
 
   const updateCursorPosition = useCallback(() => {
     if (wordBoxRef.current) {
@@ -34,7 +30,6 @@ export function WordBox({}: WordBoxProps) {
         const currLetterElement = currWordElement.children[currLetterIdx];
         const prevLetterElement = currWordElement.children[currLetterIdx - 1];
 
-        // Update cursor to left of current letter or the end of the current word
         if (currLetterElement) {
           const letterTop = currLetterElement.getBoundingClientRect().top + 2;
           const letterLeft = currLetterElement.getBoundingClientRect().left;
@@ -53,10 +48,8 @@ export function WordBox({}: WordBoxProps) {
     updateCursorPosition();
   }, 300);
 
-  // Ensures cursor position updates after window resize
   useEffect(() => {
     window.addEventListener("resize", handleResize);
-
     return () => {
       handleResize.cancel();
       window.removeEventListener("resize", handleResize);

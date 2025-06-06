@@ -2,13 +2,8 @@ import { useEffect, useRef, useState } from "react";
 import "../style.css";
 import React from "react";
 
-type CursorProps = {
-  top: number;
-  left: number;
-};
-
-export function Cursor({ top, left }: CursorProps) {
-  const cursorRef = useRef<HTMLSpanElement>(null);
+export function Cursor({ top, left }) {
+  const cursorRef = useRef(null);
   const [isAnimating, setIsAnimating] = useState(false);
 
   // Enables blinking cursor animation if user hasn't typed in 1.5s

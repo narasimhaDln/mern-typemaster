@@ -1,14 +1,14 @@
 import axios from "axios";
-import { API_BASE_URL } from "../config.ts";
+import { API_BASE_URL } from "../config.js";
 
-export async function saveScore(userId: string, score: number): Promise<void> {
+export async function saveScore(userId, score) {
   const data = {
     userId,
-    value: score
+    value: score,
   };
 
   // Don't attempt to save the score if it is null or zero
-  if (!score || score == 0) {
+  if (!score || score === 0) {
     return;
   }
 
